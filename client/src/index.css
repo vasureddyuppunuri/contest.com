@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-zinc-950 text-zinc-100 min-h-screen;
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-zinc-900/40 border border-zinc-800/50 backdrop-blur-xl rounded-2xl p-6 shadow-2xl;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-emerald-600 to-cyan-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-emerald-500/40 active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-2 text-sm font-semibold text-zinc-200 backdrop-blur-sm transition-all duration-300 hover:border-zinc-500 hover:text-white hover:bg-zinc-800;
+  }
+
+  .input-field {
+    @apply w-full rounded-xl border border-zinc-800 bg-zinc-950/50 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all duration-300;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-zinc-800 rounded-full hover:bg-zinc-700 transition-colors;
+  }
+
+  /* Make date/time picker icons visible in dark theme */
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(0.8) sepia(1) saturate(5) hue-rotate(100deg);
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 2px;
+    transition: all 0.2s;
+  }
+
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover,
+  input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    @apply bg-emerald-500/20;
+    transform: scale(1.1);
+  }
+}
+
+@layer utilities {
+  .text-shadow-glow {
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+  }
+}
+  
+.clip-path-hex { clip-path: polygon(25% 0%%, 75% 0%%, 100% 50%%, 75% 100%%, 25% 100%%, 0%% 50%%); }  
+.clip-path-diamond { clip-path: polygon(50% 0%%, 100% 50%%, 50% 100%%, 0%% 50%%); }  
+.clip-path-slanted { clip-path: polygon(10%% 0, 100%% 0, 90%% 100%%, 0 100%%); }  
+.animate-spin-slow { animation: spin 12s linear infinite; } 
