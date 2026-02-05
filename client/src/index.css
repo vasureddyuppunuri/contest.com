@@ -61,7 +61,7 @@
   }
 }
   
-.clip-path-hex { clip-path: polygon(25% 0%%, 75% 0%%, 100% 50%%, 75% 100%%, 25% 100%%, 0%% 50%%); }  
-.clip-path-diamond { clip-path: polygon(50% 0%%, 100% 50%%, 50% 100%%, 0%% 50%%); }  
-.clip-path-slanted { clip-path: polygon(10%% 0, 100%% 0, 90%% 100%%, 0 100%%); }  
+.clip-path-hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }  
+.clip-path-diamond { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }  
+.clip-path-slanted { clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }  
 .animate-spin-slow { animation: spin 12s linear infinite; } 
