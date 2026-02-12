@@ -296,33 +296,35 @@ const ActiveProject = () => {
                             </div>
                             <div>
                               <p className="text-sm font-bold text-zinc-200">{p.name}</p>
-                              <div className="flex items-center gap-1">
-                                {submission ? (
-                                  <a 
-                                    href={submission.githubUrl} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="text-[10px] text-emerald-400 font-black hover:underline flex items-center gap-1"
-                                  >
-                                    <Send className="h-2 w-2" /> VIEW REPO
-                                  </a>
-                                ) : (
-                                  <span className="text-[10px] text-zinc-600 font-black italic uppercase tracking-tighter">No Submission Yet</span>
-                                )}
-                              </div>
+                              {!submission && (
+                                <span className="text-[10px] text-zinc-600 font-black italic uppercase tracking-tighter">No Submission Yet</span>
+                              )}
                             </div>
                           </div>
-                          <button 
-                            onClick={() => submission && setVotingFor(p._id)}
-                            disabled={!submission}
-                            className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-colors ${
-                              submission 
-                                ? "bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white" 
-                                : "bg-zinc-800 text-zinc-600 cursor-not-allowed"
-                            }`}
-                          >
-                            VOTE
-                          </button>
+                          
+                          <div className="flex items-center gap-2">
+                             {submission && (
+                               <a 
+                                 href={submission.githubUrl} 
+                                 target="_blank" 
+                                 rel="noopener noreferrer"
+                                 className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest bg-zinc-800 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all shadow-lg flex items-center gap-1.5 border border-emerald-500/20"
+                               >
+                                 <ExternalLink className="h-3 w-3" /> View
+                               </a>
+                             )}
+                             <button 
+                               onClick={() => submission && setVotingFor(p._id)}
+                               disabled={!submission}
+                               className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-colors ${
+                                 submission 
+                                   ? "bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white" 
+                                   : "bg-zinc-800 text-zinc-600 cursor-not-allowed"
+                               }`}
+                             >
+                               VOTE
+                             </button>
+                          </div>
                         </div>
                       </motion.div>
                     );

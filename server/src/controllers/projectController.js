@@ -135,6 +135,12 @@ const closeProject = async (req, res) => {
         project.startDate
       );
       participant.streak = consecutive ? participant.streak + 1 : 1;
+      
+      // Update total votes received for this participant
+      if (voteAggregates[pId]) {
+        participant.totalVotesReceived = (participant.totalVotesReceived || 0) + voteAggregates[pId].count;
+      }
+
       participant.totalPoints += points;
       participant.latestRating = stars;
       participant.lastParticipatedProjectEndDate = project.endDate;

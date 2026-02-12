@@ -204,8 +204,10 @@ const Leaderboard = () => {
                       <div>
                         <h4 className="font-black text-base text-white group-hover:text-emerald-400 transition-colors uppercase italic tracking-tighter">{user.name}</h4>
                         <div className="flex items-center gap-3 mt-1">
-                           <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest border border-zinc-800 px-2 py-0.5 rounded">Deploy Grade B</span>
-                           {user.streak >= 3 && <Flame className="h-3 w-3 text-orange-500" />}
+                           <span className={`text-[8px] font-black uppercase tracking-widest border px-2 py-0.5 rounded transition-colors ${user.streak >= 5 ? 'bg-orange-500/10 text-orange-500 border-orange-500/20' : 'text-zinc-600 border-zinc-800'}`}>
+                             {user.streak >= 5 ? 'Veteran Warrior' : user.streak >= 3 ? 'Active Combatant' : 'New Recruit'}
+                           </span>
+                           {user.streak >= 3 && <Flame className={`h-3 w-3 ${user.streak >= 5 ? 'text-orange-500 animate-bounce' : 'text-orange-400'}`} />}
                         </div>
                       </div>
                     </div>
@@ -214,17 +216,17 @@ const Leaderboard = () => {
                   <div className="flex flex-col sm:flex-row items-center gap-8 mt-4 md:mt-0 px-4">
                     <div className="flex items-center gap-10">
                       <div className="flex flex-col items-center">
-                        <div className="flex items-center gap-1.5 text-emerald-500 font-black">
-                           <span>{user.latestRating}.0</span>
+                        <div className="flex items-center gap-1.5 text-blue-400 font-black">
+                           <span>{user.totalVotesReceived}</span>
                         </div>
-                        <p className="text-[8px] font-black text-zinc-600 uppercase mt-1">Heat Index</p>
+                        <p className="text-[8px] font-black text-zinc-600 uppercase mt-1">Votes</p>
                       </div>
                       <div className="h-8 w-px bg-white/5 hidden sm:block" />
                       <div className="flex flex-col items-center">
                         <div className="flex items-center gap-1.5 text-orange-500 font-black">
                            <span>{user.streak}</span>
                         </div>
-                        <p className="text-[8px] font-black text-zinc-600 uppercase mt-1">Kill Streak</p>
+                        <p className="text-[8px] font-black text-zinc-600 uppercase mt-1">Streak</p>
                       </div>
                     </div>
 
@@ -232,7 +234,7 @@ const Leaderboard = () => {
                       <p className="text-2xl font-black text-white italic tracking-tighter">{user.totalPoints}</p>
                       <div className="flex items-center justify-center gap-2 mt-0.5">
                          <div className="h-1 w-1 bg-emerald-500 rounded-full animate-pulse" />
-                         <p className="text-[7px] font-black text-zinc-600 uppercase tracking-widest">Aggregate</p>
+                         <p className="text-[7px] font-black text-zinc-600 uppercase tracking-widest">Aggregate Score</p>
                       </div>
                     </div>
                   </div>

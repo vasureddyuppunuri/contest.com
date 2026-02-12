@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema(
     avatar: { type: String, default: "default" },
     role: { type: String, enum: ["admin", "participant"], default: "participant" },
     totalPoints: { type: Number, default: 0 },
+    totalVotesReceived: { type: Number, default: 0 },
     streak: { type: Number, default: 0 },
     latestRating: { type: Number, default: 0 },
     lastParticipatedProjectEndDate: { type: Date, default: null },
