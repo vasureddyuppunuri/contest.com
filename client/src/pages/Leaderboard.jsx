@@ -235,7 +235,7 @@ const Leaderboard = () => {
                       <p className="text-2xl font-black text-white italic tracking-tighter">{user.totalPoints}</p>
                       <div className="flex items-center justify-center gap-2 mt-0.5">
                          <div className="h-1 w-1 bg-emerald-500 rounded-full animate-pulse" />
-                         <p className="text-[7px] font-black text-zinc-600 uppercase tracking-widest">Aggregate Score</p>
+                         <p className="text-[7px] font-black text-zinc-600 uppercase tracking-widest">Overall Points</p>
                       </div>
                     </div>
                   </div>

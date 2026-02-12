@@ -55,4 +55,6 @@ export const api = {
     request(`/api/projects/${id}`, { method: "DELETE" }),
   deleteUser: (id) =>
     request(`/api/users/${id}`, { method: "DELETE" }),
+  bulkDeleteUsers: (ids) =>
+    request("/api/users/bulk", { method: "DELETE", body: JSON.stringify({ ids }) }),
 };

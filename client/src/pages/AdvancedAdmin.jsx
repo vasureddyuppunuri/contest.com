@@ -29,11 +29,13 @@ const AdvancedAdmin = () => {
   const [success, setSuccess] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [appliedSearch, setAppliedSearch] = useState("");
+  const [selectedUsers, setSelectedUsers] = useState([]);
   
   // States for editing
   const [editingProject, setEditingProject] = useState(null);
   const [isDeletingUser, setIsDeletingUser] = useState(null);
   const [isDeletingProject, setIsDeletingProject] = useState(null);
+  const [isBulkDeleting, setIsBulkDeleting] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -44,6 +46,7 @@ const AdvancedAdmin = () => {
       ]);
       setParticipants(userList);
       setProjects(projectList);
+      setSelectedUsers([]);
     } catch (err) {
       setError("Failed to fetch administrative data");
     } finally {
@@ -58,6 +61,35 @@ const AdvancedAdmin = () => {
   const showSuccess = (msg) => {
     setSuccess(msg);
     setTimeout(() => setSuccess(""), 3000);
+  };
+
+  const handleSelectUser = (userId) => {
+    setSelectedUsers(prev => 
+      prev.includes(userId) ? prev.filter(id => id !== userId) : [...prev, userId]
+    );
+  };
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedUsers(filteredUsers.map(u => u._id));
+    } else {
+      setSelectedUsers([]);
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    if (!window.confirm(`Are you sure you want to vanish ${selectedUsers.length} warriors?`)) return;
+    try {
+      setIsBulkDeleting(true);
+      await api.bulkDeleteUsers(selectedUsers);
+      setParticipants(prev => prev.filter(u => !selectedUsers.includes(u._id)));
+      setSelectedUsers([]);
+      showSuccess(`${selectedUsers.length} warriors vanished`);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsBulkDeleting(false);
+    }
   };
 
   const handleDeleteUser = async (userId) => {
@@ -215,12 +247,33 @@ const AdvancedAdmin = () => {
                   <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Global participant registry</p>
                 </div>
               </div>
+
+              {selectedUsers.length > 0 && (
+                <motion.button 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  onClick={handleBulkDelete}
+                  disabled={isBulkDeleting}
+                  className="px-6 py-3 rounded-2xl bg-red-600 text-white hover:bg-red-500 transition-all text-[10px] font-black uppercase tracking-widest shadow-xl shadow-red-500/20 flex items-center gap-2"
+                >
+                  {isBulkDeleting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+                  Vanish Selection ({selectedUsers.length})
+                </motion.button>
+              )}
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead className="bg-white/[0.02] text-[10px] uppercase font-black tracking-[0.2em] text-zinc-600 border-b border-white/5">
                   <tr>
+                    <th className="px-8 py-5 w-10">
+                      <input 
+                        type="checkbox" 
+                        onChange={handleSelectAll}
+                        checked={filteredUsers.length > 0 && selectedUsers.length === filteredUsers.length}
+                        className="w-4 h-4 rounded border-zinc-800 bg-zinc-950 text-emerald-500 focus:ring-offset-0 focus:ring-emerald-500/50"
+                      />
+                    </th>
                     <th className="px-8 py-5">Operator profile</th>
                     <th className="px-8 py-5">Communication</th>
                     <th className="px-8 py-5 text-center">Arena Stats</th>
@@ -232,11 +285,21 @@ const AdvancedAdmin = () => {
                     <tr 
                       key={user._id} 
                       className={`group transition-all duration-500 ${
-                        appliedSearch && (user.name.toLowerCase().includes(appliedSearch.toLowerCase()) || user.email.toLowerCase().includes(appliedSearch.toLowerCase()))
+                        selectedUsers.includes(user._id)
+                        ? 'bg-emerald-500/10'
+                        : appliedSearch && (user.name.toLowerCase().includes(appliedSearch.toLowerCase()) || user.email.toLowerCase().includes(appliedSearch.toLowerCase()))
                         ? 'bg-emerald-500/5 shadow-[inset_0_0_20px_rgba(16,185,129,0.05)]' 
                         : 'hover:bg-white/[0.01]'
                       }`}
                     >
+                      <td className="px-8 py-6">
+                        <input 
+                          type="checkbox"
+                          checked={selectedUsers.includes(user._id)}
+                          onChange={() => handleSelectUser(user._id)}
+                          className="w-4 h-4 rounded border-zinc-800 bg-zinc-950 text-emerald-500 focus:ring-offset-0 focus:ring-emerald-500/50"
+                        />
+                      </td>
                       <td className="px-8 py-6">
                         <div className="flex items-center gap-4">
                           <div className="h-12 w-12 rounded-2xl bg-zinc-800 border-2 border-zinc-800 group-hover:border-emerald-500/50 overflow-hidden transition-all shadow-inner">

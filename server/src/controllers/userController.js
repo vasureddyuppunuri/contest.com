@@ -46,4 +46,17 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { getProfile, listParticipants, getGlobalStats, deleteUser };
+const bulkDeleteUsers = async (req, res) => {
+  try {
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids)) {
+      return res.status(400).json({ message: "Invalid user IDs provided" });
+    }
+    await User.deleteMany({ _id: { $in: ids } });
+    return res.json({ message: `${ids.length} warriors vanished successfully` });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { getProfile, listParticipants, getGlobalStats, deleteUser, bulkDeleteUsers };
