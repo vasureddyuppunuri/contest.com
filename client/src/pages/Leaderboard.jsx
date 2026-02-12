@@ -32,7 +32,8 @@ const Leaderboard = () => {
   }, []);
 
   const filteredUsers = rows.filter(user => 
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+    user.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (user.totalPoints > 0 || user.streak > 0)
   );
 
   const topThree = filteredUsers.slice(0, 3);
